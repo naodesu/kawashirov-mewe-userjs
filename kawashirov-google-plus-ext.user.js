@@ -5,6 +5,7 @@
 // @description:ru ВНИМАНИЕ! Для Chromium-подобных требуется флаг --enable-blink-features=ContextMenu 
 // @version 0.0.1
 // @namespace https://gist.github.com/kawashirov/
+// @updateURL https://gist.github.com/kawashirov/6ed0f32e8cbf97d3b46d2cacbc48906e/raw/kawashirov-google-plus-ext.user.js
 // @include https://plus.google.com/*
 // @grant GM_setClipboard
 // ==/UserScript==
