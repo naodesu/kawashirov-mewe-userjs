@@ -4,6 +4,7 @@
 // @description WARNING! Chromium-based requires switch --enable-blink-features=ContextMenu 
 // @description:ru ВНИМАНИЕ! Для Chromium-подобных требуется флаг --enable-blink-features=ContextMenu 
 // @version 0.0.1
+// @namespace https://gist.github.com/kawashirov/
 // @include https://plus.google.com/*
 // @grant GM_setClipboard
 // ==/UserScript==
@@ -65,7 +66,7 @@
 		var src = element.src;
 
 		var image_url = is_image_basic(src);
-		if (image_url === false) { var image_url = is_image_proxy(src); }
+		if (image_url === false) { image_url = is_image_proxy(src); }
 
 		if (image_url !== false) { 
 			var encoded_uri = encodeURIComponent(image_url);
@@ -82,7 +83,7 @@
 				window.open('https://saucenao.com/search.php?url=' + encoded_uri);
 			}, ICON_SAUCENAO);
 			add_menu_item(menu, 'Искать картинку в Google', function(){
-				window.open('https://www.google.com/searchbyimage?safe=off?image_url=' + encoded_uri);
+				window.open('https://www.google.com/searchbyimage?safe=off&image_url=' + encoded_uri);
 			}, ICON_GOOGLE);
 		}
 	}
