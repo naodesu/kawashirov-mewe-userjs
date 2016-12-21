@@ -6,12 +6,12 @@
 // @version 0.0.1
 // @namespace https://gist.github.com/kawashirov/
 // @updateURL https://gist.github.com/kawashirov/6ed0f32e8cbf97d3b46d2cacbc48906e/raw/kawashirov-google-plus-ext.user.js
+// @license WTFPL
 // @include https://plus.google.com/*
 // @grant GM_setClipboard
 // ==/UserScript==
 
 (function() {
-	console.log('Loading...');
 
 	var ICON_LINK_OPEN = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAACyElEQVRIx42VW0gUURjHfzO77norS8RLiHaxIkhJiCACAykqEETwwYoeAiWKyi70EgXVg0Z0gyLqyadaCruC0UNBGhRIERRkiUlKRKlptrrqujv/HtbLqjOT//Myc875fuc7//nOGXBSOZ8JMezYRuniCD7DIXw9d1JXZuB1GBbiDwPomNP62+nZqhG5qUnpossJkMcLj+pkuSKWizFHC4y1tJrWKVfAChGa3uQGyshk0hMpimlZ5z1DXHFeZOopl/v8ZpTIjDaOkF/VjhkUTGSQSxNFedRQwsIpZhJNnCFImCLclchLVKX+WfRXWipk6LKLBwUiBOWoVMGJrqiiispSi1YJJeiqq4mxLRxP4wCpQB9v+AlAkAbaSaaew/xfwTyFJEm1QkQJM0oELdQ1/U+xDDwJJAE/eA4/Ocko+dQv4hz7mY9MFPuaYxjwgwYCjHup5iCeeQLiy0L48VGeSwVOp+wxNTPevTbllZJImkP4IyrxkBpXneacORbtvXywDX9IJVHCXOc0muodLpAkdapQvMWPQQUq0dc5njcqSShFiIhp1WlMy0RoLgBSuY22qWNG+F2lCy3RWRHhHa2myrRAdNgBIIMA2haXRUBZQnl6qi8iwg2jkGZ66WKPPQAyCaDNalSnPqpOOUIFeibpvYhyC1jODjbheOn1cAireVcbWYTpZgRUY2ydvBANoJNO+884qT728bBnb082EV4zwtH0RLtpXpciG+IBTzAQYXZiWrgCjFhV+BxuLj9ewwkQIy9mERTTjGWLyMHMxgT+xlyIA/SG8ttYQxq1wJ9ip9/IFjYC0AIRfsWzL/qO13IBgEEG4uFx8rMEgAHW0d3PDlqnx1YxlKl7mo+CqhLiwWz8bqKZOqFPrsEhNapUiA/kznbYSxU3fSnpJNsczkkXxhlkEFrYzXe7Gau5xDdCjm2EIVooZ04x/QP+f6o+O6l8OAAAAABJRU5ErkJggg==';
 	var ICON_LINK_COPY = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAADjklEQVRIx5WVf0zUdRjHX9/vnfwqDjiO0miwGEbMI5Roqxy5tcqk1KLlWGXDhbjE1sxotlYbzX5t5h8ltKbtXIRaqdncwlX+IWxsNlvuWvyYViJNKOA8RO6Aju+7Pzq4Ozn0ep5/nu/zfL6v7/P5fJ7n+QJAFpv5lQDjURpkhL0s5DpiAAV4zPudpGOLCQUZZHqYxzh1bUQWJ+1aa7XravlLL+hG4WcF6Thxkk1SvAzqzd2r1WrcQB/DACgccHGF1zgGAxwnCTC5SCdHsWIBXa7iI1RwkOYwAAzEBDfhwo43jDQI0Q9j7KOByWhA4LbU3+ljPR0BviMAZPAorGITudiwR33tLFu5AIeo41LEO14o6bSKxdfk4cBJM3pOPsWT8yoRFkfJigdoxQGk4b9Dv0hq00NapqVhvVMl8koaUqkQe0mOB8gAytBqST+pQISYmNUprPcVknRRS4XwkA1gzrmXDJOFgJcR+JRS3Lhxs5it+CYAWMRhyqGGt8kk5oyYuUVjxu6md9Z/gX9mzAL28TynNjFMoxmvtjRj2KOKcwHm5OzjEj5mCbxOpZ1EZZDxI+SSBthws4w3qWO0MXHAGFM9NJAEWNzHR6xjO6NFiQJKjE+0GEIEAOjDD9hAZkKv345H99aYAwRoIwUwZg86EYCTV7hrI02cYBsVNMUEr7eFafL4gntydMZYwwmgnIr/AZiiiM+N8ko2GOm0AKWs5FDMkmtvwc0Bymv5jDT8rOFxvqWHt+JlIAQhJoCpqGm3npQtvMdhdnCWZ9nDz2xkEIbIiQAMASYmlPIko5RE4VNq2EkTXo7Ty3JOUk8/fECenoosupyncQVVJUJcwsdlVCfJowyhAbXKVI7eUJsadLMQ23HSUqzTkgpFwE6nb+V+ammmzNaTKUR3uGtEEjn8iEUyXvbwNxZsYxeO2JN7EBXpTNTUeUdPS/IoU6hNV9SiIXWqUIgVADhojWRg8gO7e3mED+nhPH9wjpFIO/MEB7mbr6jiHOykCwcOMkiNvYWXmRysfik34qwGbiUVPxPUzjiHyGcXJpDKwy5cwDSR2bGcShZhADbWlSV/j5MdfEMwMhuiLBebqaaDKoa7jTnFY+PLlKpXaQS6w713tbjIZ5xndMywtsSLl9GfrhfVq/mlXWstu2gna24GmFgP0LLglmzS5qn0acbwYXWwgd/m64J83uVPggTm0S7q//u5/AtYO9QjPPP28QAAAABJRU5ErkJggg==';
@@ -97,7 +97,6 @@
 			element = element.parentNode;
 		}
 		if (video_url !== false) {
-
 			add_menu_item(menu, 'Открыть видео на YouTube', function(){
 				window.open(video_url);
 			}, ICON_YOUTUBE);
@@ -108,15 +107,10 @@
 	}
 
 	function contextmenu_listener(event) {
-		console.log(event);
-
-		// chrome.runtime.sendMessage({'cmd': 'cleanup'});
-
 		var old_menu_holders = document.getElementsByClassName('kwshrv-menu-holder');
 		for (var i = 0; i < old_menu_holders.length; ++i) {
 			old_menu_holders[i].classList.remove('kwshrv-menu-holder');
 		}
-
 		var menu_container = document.getElementById('kwshrv-menu');
 		if (menu_container === null) {
 			menu_container = document.createElement('menu');
@@ -134,9 +128,8 @@
 			event.target.setAttribute('contextmenu', 'kwshrv-menu');
 			event.target.classList.add('kwshrv-menu-holder');
 		}
-
-		console.log(menu_container);
 	}
 
 	document.addEventListener('contextmenu', contextmenu_listener);
+
 })();
