@@ -1,5 +1,6 @@
 ### Кавашировские расширения для Google+
 ![Скриншот](https://i.imgur.com/tsMhVBl.png)
+
 Распространяется по лицензии [WTFPL](https://ru.wikipedia.org/wiki/WTFPL).
 
 **Внимание!** Chromium-подобные браузеры (Chrome, Vivaldi, Opera, ...) на 2016.12.22 не поддерживают **необходимые для работы** скрипта HTML5 контекстные меню. Для включения эксперементальной поддержки необходимо включить `ContextMenu` в [Blink](https://ru.wikipedia.org/wiki/Blink_(%D0%B4%D0%B2%D0%B8%D0%B6%D0%BE%D0%BA)). Это можно сделать флагом запуска `--enable-blink-features=ContextMenu`. При этом возможны проблемы. 
