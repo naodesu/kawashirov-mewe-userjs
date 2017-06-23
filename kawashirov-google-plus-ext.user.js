@@ -3,7 +3,7 @@
 // @name:ru Кавашировские расширения для Google+
 // @description WARNING! Chromium-based requires switch --enable-blink-features=ContextMenu 
 // @description:ru ВНИМАНИЕ! Для Chromium-подобных требуется флаг --enable-blink-features=ContextMenu 
-// @version 0.0.1
+// @version 0.0.2
 // @namespace https://gist.github.com/kawashirov/
 // @updateURL https://gist.github.com/kawashirov/6ed0f32e8cbf97d3b46d2cacbc48906e/raw/kawashirov-google-plus-ext.user.js
 // @license WTFPL
@@ -38,7 +38,8 @@
 	function is_image_basic(url) {
 		try {
 			// 4 секции разделены знаком "/", 5-ая содержит параметры
-			return /^(https:\/\/[^.]*\.googleusercontent\.com\/([^/]+\/){4})[^/]+\/.*/ui.exec(url)[1] + 's0/';
+			var regex = /^(https:\/\/[^.]*\.googleusercontent\.com\/(?:[^/]+\/){4})[^/]+\/(.*)$/ui
+			return url.replace(regex, '$1s0/$2');
 		} catch (err) {
 			return false;
 		}
