@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name Kawashirov's Google+ Extensions
-// @name:ru Кавашировские расширения для Google+
+// @name Kawashirov's Mewe Extensions
+// @name:ru Кавашировские расширения для MeWe
 // @description WARNING! Chromium-based requires switch --enable-blink-features=ContextMenu 
 // @description:ru ВНИМАНИЕ! Для Chromium-подобных требуется флаг --enable-blink-features=ContextMenu 
-// @version 0.0.2
-// @namespace https://gist.github.com/kawashirov/
-// @updateURL https://gist.github.com/kawashirov/6ed0f32e8cbf97d3b46d2cacbc48906e/raw/kawashirov-google-plus-ext.user.js
+// @version 0.0.3
+// @namespace https://github.com/naodesu/
+// @updateURL https://github.com/naodesu/kawashirov-mewe-userjs/raw/master/kawashirov-mewe.user.js
 // @license WTFPL
-// @include https://plus.google.com/*
+// @include https://mewe.com/*
 // @grant GM_setClipboard
 // ==/UserScript==
 
@@ -20,39 +20,35 @@
 	var ICON_IQDB = 'data:image/png;base64,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';
 	var ICON_SAUCENAO = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAL0lEQVQI12NgYGCo/8fgwMQQIcUgY8HAV8DA/oCB+QAIARlALlAQKAVUAFTGwAAA3okJW9pvlV4AAAAASUVORK5CYII=';
 
-	function is_youtube_video_element(element) {
+	function mewe_is_youtube_video_element(element) {
 		/* Возвращает ссылку на youtube.com, или false если это не видео. */
 		if (
 			element.tagName.toLowerCase() != 'div' ||
-			!element.classList.contains('A2zxfe')
+			!element.classList.contains('yt-preview')
 		) { return false; }
 		try {
-			var jsdata = element.getAttribute('jsdata');
-			var r = /;(https?:\/\/(www\.)?youtube.com\/([^;]+));/ui.exec(jsdata);
-			return r[1];
+			var link = element.getAttribute('data-ytlink');
+            return link;
 		} catch (err) {
 			return false;
 		}
-	}
+    }
 
-	function is_image_basic(url) {
+    function is_image_mewe(url) {
 		try {
-			// 4 секции разделены знаком "/", 5-ая содержит параметры
-			var regex = /^(https:\/\/[^.]*\.googleusercontent\.com\/(?:[^/]+\/){4})[^/]+\/(.*)$/ui
-			return url.replace(regex, '$1s0/$2');
-		} catch (err) {
-			return false;
-		}
-	}
+            // convert:
+			//   https://img.mewe.com/api/v2/photo/[^/]*/[0-9]*x[0-9]*/img?static=0
+            // to:
+            //   https://img.mewe.com/api/v2/photo/[^/]*/full/any_image_name
+            var matches = /^(https:\/\/img.mewe.com\/api\/v2\/photo\/([^/]+))\/[0-9]+x[0-9]+\/img.*$/ui.exec(url);
 
-	function is_image_proxy(url) {
-		try {
-			// Иногда содержит /proxy/, а иногда нет, всегда отделяется от параметров знаком "="
-			return /^https:\/\/[a-z0-9-]*\.googleusercontent\.com\/[^=]+=/ui.exec(url)[0] + 's0';
+            // Оригинальное имя и расширение картинки неоткуда взять, берём в качестве имени идентификатор картинки из URL
+            // FIXME: Расширение не ставим, по идее браузер при сохранении картинки должен сам подставить правильное (в FF работает).
+            return matches[1]+'/full/'+matches[2];
 		} catch (err) {
 			return false;
 		}
-	}
+    }
 
 	function add_menu_item(menu, label, onclick, icon) {
 		var menu_item = document.createElement('menuitem');
@@ -67,10 +63,17 @@
 		if (element.tagName.toLowerCase() != 'img') return;
 		var src = element.src;
 
-		var image_url = is_image_basic(src);
-		if (image_url === false) { image_url = is_image_proxy(src); }
+        var image_url = false;
+        var url_is_public = false;
 
-		if (image_url !== false) { 
+        var hostname = window.location.hostname;
+        switch (hostname) {
+            case "mewe.com":
+                image_url = is_image_mewe(src);
+                break;
+        }
+
+		if (image_url !== false) {
 			var encoded_uri = encodeURIComponent(image_url);
 			add_menu_item(menu, 'Открыть картинку в полном размере', function(){
 				window.open(image_url);
@@ -78,25 +81,35 @@
 			add_menu_item(menu, 'Копировать ссылку на картинку в полном размере', function(){
 				GM_setClipboard(image_url);
 			}, ICON_LINK_COPY);
-			add_menu_item(menu, 'Искать картинку в IQDB', function(){
-				window.open('https://iqdb.org/?url=' + encoded_uri);
-			}, ICON_IQDB);
-			add_menu_item(menu, 'Искать картинку в SauceNao', function(){
-				window.open('https://saucenao.com/search.php?url=' + encoded_uri);
-			}, ICON_SAUCENAO);
-			add_menu_item(menu, 'Искать картинку в Google', function(){
-				window.open('https://www.google.com/searchbyimage?safe=off&image_url=' + encoded_uri);
-			}, ICON_GOOGLE);
+
+            if (url_is_public) {
+                add_menu_item(menu, 'Искать картинку в IQDB', function(){
+                    window.open('https://iqdb.org/?url=' + encoded_uri);
+                }, ICON_IQDB);
+                add_menu_item(menu, 'Искать картинку в SauceNao', function(){
+                    window.open('https://saucenao.com/search.php?url=' + encoded_uri);
+                }, ICON_SAUCENAO);
+                add_menu_item(menu, 'Искать картинку в Google', function(){
+                    window.open('https://www.google.com/searchbyimage?safe=off&image_url=' + encoded_uri);
+                }, ICON_GOOGLE);
+            }
 		}
 	}
 
 	function bind_youtube(menu, event) {
 		var element = event.target;
 		var video_url = false;
+        var hostname = window.location.hostname;
+
 		while (video_url === false && element != document && element !== null) {
-			video_url = is_youtube_video_element(element);
+            switch (hostname) {
+                case "mewe.com":
+                    video_url = mewe_is_youtube_video_element(element);
+                    break;
+            }
 			element = element.parentNode;
 		}
+
 		if (video_url !== false) {
 			add_menu_item(menu, 'Открыть видео на YouTube', function(){
 				window.open(video_url);
