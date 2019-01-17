@@ -28,27 +28,27 @@
 		) { return false; }
 		try {
 			var link = element.getAttribute('data-ytlink');
-            return link;
+			return link;
 		} catch (err) {
 			return false;
 		}
-    }
+	}
 
-    function is_image_mewe(url) {
+	function is_image_mewe(url) {
 		try {
-            // convert:
+			// convert:
 			//   https://img.mewe.com/api/v2/photo/[^/]*/[0-9]*x[0-9]*/img?static=0
-            // to:
-            //   https://img.mewe.com/api/v2/photo/[^/]*/full/any_image_name
-            var matches = /^(https:\/\/img.mewe.com\/api\/v2\/photo\/([^/]+))\/[0-9]+x[0-9]+\/img.*$/ui.exec(url);
+			// to:
+			//   https://img.mewe.com/api/v2/photo/[^/]*/full/any_image_name
+			var matches = /^(https:\/\/img.mewe.com\/api\/v2\/photo\/([^/]+))\/[0-9]+x[0-9]+\/img.*$/ui.exec(url);
 
-            // Оригинальное имя и расширение картинки неоткуда взять, берём в качестве имени идентификатор картинки из URL
-            // FIXME: Расширение не ставим, по идее браузер при сохранении картинки должен сам подставить правильное (в FF работает).
-            return matches[1]+'/full/'+matches[2];
+			// Оригинальное имя и расширение картинки неоткуда взять, берём в качестве имени идентификатор картинки из URL
+			// FIXME: Расширение не ставим, по идее браузер при сохранении картинки должен сам подставить правильное (в FF работает).
+			return matches[1]+'/full/'+matches[2];
 		} catch (err) {
 			return false;
 		}
-    }
+	}
 
 	function add_menu_item(menu, label, onclick, icon) {
 		var menu_item = document.createElement('menuitem');
@@ -63,15 +63,10 @@
 		if (element.tagName.toLowerCase() != 'img') return;
 		var src = element.src;
 
-        var image_url = false;
-        var url_is_public = false;
+		var image_url = false;
+		var url_is_public = false;
 
-        var hostname = window.location.hostname;
-        switch (hostname) {
-            case "mewe.com":
-                image_url = is_image_mewe(src);
-                break;
-        }
+		image_url = is_image_mewe(src);
 
 		if (image_url !== false) {
 			var encoded_uri = encodeURIComponent(image_url);
@@ -82,31 +77,31 @@
 				GM_setClipboard(image_url);
 			}, ICON_LINK_COPY);
 
-            if (url_is_public) {
-                add_menu_item(menu, 'Искать картинку в IQDB', function(){
-                    window.open('https://iqdb.org/?url=' + encoded_uri);
-                }, ICON_IQDB);
-                add_menu_item(menu, 'Искать картинку в SauceNao', function(){
-                    window.open('https://saucenao.com/search.php?url=' + encoded_uri);
-                }, ICON_SAUCENAO);
-                add_menu_item(menu, 'Искать картинку в Google', function(){
-                    window.open('https://www.google.com/searchbyimage?safe=off&image_url=' + encoded_uri);
-                }, ICON_GOOGLE);
-            }
+			if (url_is_public) {
+				add_menu_item(menu, 'Искать картинку в IQDB', function(){
+					window.open('https://iqdb.org/?url=' + encoded_uri);
+				}, ICON_IQDB);
+				add_menu_item(menu, 'Искать картинку в SauceNao', function(){
+					window.open('https://saucenao.com/search.php?url=' + encoded_uri);
+				}, ICON_SAUCENAO);
+				add_menu_item(menu, 'Искать картинку в Google', function(){
+					window.open('https://www.google.com/searchbyimage?safe=off&image_url=' + encoded_uri);
+				}, ICON_GOOGLE);
+			}
 		}
 	}
 
 	function bind_youtube(menu, event) {
 		var element = event.target;
 		var video_url = false;
-        var hostname = window.location.hostname;
+		var hostname = window.location.hostname;
 
 		while (video_url === false && element != document && element !== null) {
-            switch (hostname) {
-                case "mewe.com":
-                    video_url = mewe_is_youtube_video_element(element);
-                    break;
-            }
+			switch (hostname) {
+				case "mewe.com":
+					video_url = mewe_is_youtube_video_element(element);
+					break;
+			}
 			element = element.parentNode;
 		}
 
