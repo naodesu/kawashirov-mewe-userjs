@@ -60,8 +60,15 @@
 
 	function bind_image(menu, event) {
 		var element = event.target;
-		if (element.tagName.toLowerCase() != 'img') return;
-		var src = element.src;
+		var tagname = element.tagName.toLowerCase();
+		var src;
+
+		if (tagname == 'img') {
+			src = element.src
+		} else if (tagname == 'div' && element.classList.contains('media-feed_grid-row_image')) {
+			// Gallery grid view
+			src = element.firstElementChild.src
+		} else return
 
 		var image_url = false;
 		var url_is_public = false;
