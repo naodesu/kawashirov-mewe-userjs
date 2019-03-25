@@ -58,6 +58,12 @@
 		menu.appendChild(menu_item);
 	}
 
+	function get_bg_image(element) {
+		var style = element.currentStyle || window.getComputedStyle(element, false);
+		var bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+		return bi;
+	}
+
 	function bind_image(menu, event) {
 		var element = event.target;
 		var tagname = element.tagName.toLowerCase();
@@ -68,6 +74,12 @@
 		} else if (tagname == 'div' && element.classList.contains('media-feed_grid-row_image')) {
 			// Gallery grid view
 			src = element.firstElementChild.src
+		} else if (tagname == 'div' && element.classList.contains('post-photo-four_first-element')) {
+			// 4 elements view (first big image)
+			src = element.firstElementChild.src
+		} else if (tagname == 'div' && element.classList.contains('photo') && element.parentNode.classList.contains('post-photo-four_last-elements')) {
+			// 4 elements view (last 3 small images, except the last one)
+			src = get_bg_image(element)
 		} else return
 
 		var image_url = false;
