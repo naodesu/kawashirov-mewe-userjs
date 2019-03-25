@@ -3,7 +3,7 @@
 // @name:ru Кавашировские расширения для MeWe
 // @description WARNING! Chromium-based requires switch --enable-blink-features=ContextMenu 
 // @description:ru ВНИМАНИЕ! Для Chromium-подобных требуется флаг --enable-blink-features=ContextMenu 
-// @version 0.0.3
+// @version 0.0.4
 // @namespace https://github.com/naodesu/
 // @updateURL https://github.com/naodesu/kawashirov-mewe-userjs/raw/master/kawashirov-mewe.user.js
 // @license WTFPL
@@ -67,20 +67,34 @@
 	function bind_image(menu, event) {
 		var element = event.target;
 		var tagname = element.tagName.toLowerCase();
-		var src;
+		var src = false;
 
 		if (tagname == 'img') {
+			// Single image
 			src = element.src
-		} else if (tagname == 'div' && element.classList.contains('media-feed_grid-row_image')) {
-			// Gallery grid view
-			src = element.firstElementChild.src
-		} else if (tagname == 'div' && element.classList.contains('post-photo-four_first-element')) {
-			// 4 elements view (first big image)
-			src = element.firstElementChild.src
-		} else if (tagname == 'div' && element.classList.contains('photo') && element.parentNode.classList.contains('post-photo-four_last-elements')) {
-			// 4 elements view (last 3 small images, except the last one)
-			src = get_bg_image(element)
-		} else return
+		} else if (tagname == 'div') {
+			if (element.classList.contains('media-feed_grid-row_image')) {
+				// Gallery grid view
+				src = element.firstElementChild.src
+			} else if (element.classList.contains('post-photo-four_first-element')) {
+				// 4 elements view (first big image)
+				src = element.firstElementChild.src // or we can get it using get_bg_image(element)
+			} else if (element.classList.contains('photo') && element.parentNode.classList.contains('post-photo-four_last-elements')) {
+				// 4 elements view (last 3 small images, except the last one)
+				src = get_bg_image(element)
+			} else if (element.classList.contains('post-photo-three_first-element')) {
+				// 3 elements view (first big image)
+				src = get_bg_image(element)
+			} else if (element.classList.contains('photo') && element.parentNode.classList.contains('post-photo-three_last-elements')) {
+				// 3 elements view (last 2 small images)
+				src = get_bg_image(element)
+			} else if (element.classList.contains('photo') && element.parentNode.classList.contains('c-mw-post-photo-two')) {
+				// 2 elements view
+				src = get_bg_image(element)
+			}
+		}
+
+		if (src === false) return
 
 		var image_url = false;
 		var url_is_public = false;
